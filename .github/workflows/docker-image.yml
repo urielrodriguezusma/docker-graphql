@@ -26,9 +26,11 @@ jobs:
     - name: Build docker image
       run: |
          docker build -t urodriguezusma/docker-graphql:0.0.2 .
+         docker build -t urodriguezusma/docker-graphql:latest .
     - name: Push docker image
       run: |
        docker push urodriguezusma/docker-graphql:0.0.2
+       docker push urodriguezusma/docker-graphql:latest
 
 
 
