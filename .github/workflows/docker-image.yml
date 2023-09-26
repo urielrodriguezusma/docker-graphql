@@ -25,8 +25,7 @@ jobs:
         minor_pattern: "feat:"
         format: "${major}.${minor}.${patch}-prerelease${increment}"
       id: version
-        
-        
+      
     - name: Docker login
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER }}
@@ -34,13 +33,16 @@ jobs:
       run: |
         docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
         echo "New version: $NEW_VERSION!!!"
+      
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
             
     - name: Build docker image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-         docker build -t urodriguezusma/docker-graphql:$NEW_VERSION .
-         docker build -t urodriguezusma/docker-graphql:latest .
+         docker buildx build --platform linux/amd64,linux/arm64 -t urodriguezusma/docker-graphql:$NEW_VERSION .
+         docker buildx build --platform linux/amd64,linux/arm64 -t urodriguezusma/docker-graphql:latest .
     - name: Push docker image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
