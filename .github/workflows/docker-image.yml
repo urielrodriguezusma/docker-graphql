@@ -37,18 +37,18 @@ jobs:
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
             
-    - name: Build docker image
-      env:
-        NEW_VERSION: ${{ steps.version.outputs.version }}
-      run: |
-         docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:$NEW_VERSION .
-         docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:latest .
+    # - name: Build docker image
+    #   env:
+    #     NEW_VERSION: ${{ steps.version.outputs.version }}
+    #   run: |
+    #      docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:$NEW_VERSION .
+    #      docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:latest .
     - name: Push docker image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-       docker push urodriguezusma/docker-graphql:$NEW_VERSION
-       docker push urodriguezusma/docker-graphql:latest
+       docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:$NEW_VERSION --push .
+       docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql --push .
 
 
 
