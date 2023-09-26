@@ -41,8 +41,8 @@ jobs:
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
       run: |
-         docker buildx build --platform linux/amd64,linux/arm64 -t urodriguezusma/docker-graphql:$NEW_VERSION .
-         docker buildx build --platform linux/amd64,linux/arm64 -t urodriguezusma/docker-graphql:latest .
+         docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:$NEW_VERSION .
+         docker buildx build --platform linux/amd64 -t urodriguezusma/docker-graphql:latest .
     - name: Push docker image
       env:
         NEW_VERSION: ${{ steps.version.outputs.version }}
